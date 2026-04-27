@@ -21,7 +21,7 @@ scipy==1.11.4
 scikit-learn==1.3.2
 
 # Graph & Network
-networkx==3.2.1
+networkx==3.6.1
 
 # NLP
 nltk==3.8.1
