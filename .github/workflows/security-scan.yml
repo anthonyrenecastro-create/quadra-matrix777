@@ -56,7 +56,7 @@ jobs:
           fi
       
       - name: Upload security reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: security-reports
@@ -83,7 +83,7 @@ jobs:
           args: --severity-threshold=high --json-file-output=snyk-report.json
       
       - name: Upload Snyk report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: snyk-report
@@ -131,7 +131,7 @@ jobs:
           output: 'trivy-report.json'
       
       - name: Upload Trivy report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: trivy-report
@@ -189,7 +189,7 @@ jobs:
           pip-licenses --format=markdown --output-file=licenses.md
       
       - name: Upload license report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: license-report
           path: |

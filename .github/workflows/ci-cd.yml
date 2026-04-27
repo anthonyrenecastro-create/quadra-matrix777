@@ -194,7 +194,7 @@ jobs:
           .
     
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: quadra-matrix-${{ github.sha }}
         path: artifacts/
@@ -232,7 +232,7 @@ jobs:
       continue-on-error: true
     
     - name: Upload model artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()
       with:
         name: model-artifacts-${{ github.sha }}
