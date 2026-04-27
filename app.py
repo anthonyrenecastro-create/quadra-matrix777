@@ -544,6 +544,34 @@ def handle_connect():
     print(f"Client connected: {request.sid}")
     socketio.emit('status_message', {'message': 'Connected to server', 'type': 'info'}, room=request.sid)
 
+    # Push current system state so the dashboard is immediately in sync
+    socketio.emit('system_initialized', {'initialized': state.is_initialized}, room=request.sid)
+    socketio.emit('training_status', {'running': state.is_running}, room=request.sid)
+
+    # If training is already running, send the latest metrics snapshot
+    if state.is_running and state.iteration_count > 0 and state.loss_history:
+        latest = {
+            'iteration': state.iteration_count,
+            'loss': state.loss_history[-1],
+            'reward': state.reward_history[-1] if state.reward_history else 0,
+            'variance': state.variance_history[-1] if state.variance_history else 0,
+            'mean': state.field_mean_history[-1] if state.field_mean_history else 0,
+            'integrity_strikes': state.neuroplasticity_manager.integrity_strikes if state.neuroplasticity_manager else 0,
+            'qtable_size': len(state.oscillator.q_table) if state.oscillator else 0,
+            'text': '',
+            'noise_enabled': state.noise_enabled,
+            'noise_intensity': state.noise_intensity,
+            'noise_injections': state.noise_stats.get('total_injections', 0),
+            'ablation_config': state.ablation_config.to_dict() if state.ablation_config else None,
+            'component_contributions': {},
+            'train_controls': {},
+            'last_component_update': None,
+            'field_pde': None,
+            'atlantean_trace_size': 0,
+            'cadence': training_cadence,
+        }
+        socketio.emit('metrics_update', latest, room=request.sid)
+
 @socketio.on('disconnect')
 def handle_disconnect():
     """Handle client disconnection"""
