@@ -1,5 +1,5 @@
 # Multi-stage build for Quadra Matrix A.I.
-FROM python:3.11-slim as builder
+FROM python:3.14-slim as builder
 
 # Set working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 RUN python -c "import nltk; nltk.download('punkt', download_dir='/usr/share/nltk_data'); nltk.download('wordnet', download_dir='/usr/share/nltk_data')"
 
 # Production stage
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
