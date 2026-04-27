@@ -53,7 +53,7 @@ Flask-Limiter==3.5.0
 redis==5.0.1
 
 # Structured Logging
-python-json-logger==2.0.7
+python-json-logger==4.1.0
 
 # API Documentation
 flask-swagger-ui==4.11.1
